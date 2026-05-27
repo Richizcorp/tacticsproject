@@ -1,0 +1,262 @@
+/* ==========================================
+   RESET & PONDASI DASAR (THEMA AC MILAN)
+   ========================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-shadow: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #050505;
+    color: #e5e5e5;
+    font-family: 'Oxanium', sans-serif;
+    overflow-x: hidden;
+    padding: 20px;
+}
+
+.tactics-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* ==========================================
+   HEADER PANEL STYLE
+   ========================================== */
+.tactics-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #222;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+
+.gold-text {
+    color: #D4AF37;
+    font-family: 'Comfortaa', cursive;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+}
+
+.strength-indicator {
+    font-size: 14px;
+    color: #aaa;
+    margin-top: 5px;
+}
+
+.btn-back {
+    color: #8B0000;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: bold;
+    border: 1px solid #8B0000;
+    padding: 10px 15px;
+    border-radius: 5px;
+    background: rgba(139, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.btn-back:hover {
+    background: #8B0000;
+    color: #fff;
+    box-shadow: 0 0 15px rgba(139, 0, 0, 0.4);
+}
+
+/* ==========================================
+   LAYOUT GRID (LAPANGAN KIRI, PANEL KANAN)
+   ========================================== */
+.tactics-layout {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 30px;
+}
+
+@media (max-width: 850px) {
+    .tactics-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==========================================
+   ENGINE VISUAL LAPANGAN SEPAK BOLA
+   ========================================== */
+.football-pitch {
+    width: 100%;
+    height: 520px;
+    background: linear-gradient(135deg, #143d1a 0%, #071f0b 100%);
+    border: 3px solid rgba(255, 255, 255, 0.25);
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 100px rgba(0,0,0,0.8), 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* Garis-Garis Lapangan */
+.pitch-lines {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Agar tidak mengganggu drag mouse */
+}
+
+.center-line {
+    position: absolute;
+    top: 50%; left: 0;
+    width: 100%; height: 2px;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.center-circle {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 100px; height: 100px;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.penalty-area {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 220px; height: 95px;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+}
+.penalty-area.top { top: -2px; border-top: none; }
+.penalty-area.bottom { bottom: -2px; border-bottom: none; }
+
+/* ==========================================
+   BULATAN PEMAIN INTERAKTIF (MARKER)
+   ========================================== */
+/* ==========================================
+   PERBARUI STYLE MARKER PEMAIN (DENGAN FOTO)
+   ========================================== */
+/* ==========================================
+   PERBARUI STYLE MARKER PEMAIN (ANTI-GAGAL)
+   ========================================== */
+.player-marker {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: #111;
+    border: 2px solid #D4AF37;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: grab;
+    z-index: 10;
+    user-select: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    transform: translate(-50%, -50%);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Gambar Pemain Terpotong Rapi */
+/* Gambar Pemain Terpotong Rapi */
+.player-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;      /* Tetap pertahankan ini */
+    object-position: top;   /* TAMBAHKAN INI: Memaksa fokus kamera ke kepala pemain */
+    border-radius: 50%;
+    position: absolute;
+    top: 0; left: 0;
+    z-index: 1;
+}
+
+/* Teks Inisial Cadangan jika Gambar Kosong/Gagal Load */
+.player-initial {
+    font-size: 14px;
+    font-weight: 800;
+    color: #8B0000;
+    font-family: 'Comfortaa', cursive;
+    z-index: 0; /* Berada di belakang gambar */
+}
+
+/* Badge Kotak di Bawah Lingkaran */
+.player-badge-info {
+    position: absolute;
+    bottom: -8px;
+    background: #0f0f0f;
+    border: 1px solid #D4AF37;
+    border-radius: 4px;
+    padding: 1px 6px;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+    z-index: 12;
+    min-width: 50px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+}
+
+.player-marker .rating-label {
+    font-size: 11px;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.player-marker .pos-label {
+    font-size: 8px;
+    color: #D4AF37;
+    font-weight: bold;
+}
+
+/* ==========================================
+   SIDE PANEL INFO PEMAIN (KANAN)
+   ========================================== */
+.detail-panel {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid #222;
+    border-radius: 15px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 520px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.panel-header {
+    border-bottom: 1px dashed #333;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.detail-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.placeholder-text {
+    color: #666;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+.player-active-info {
+    width: 100%;
+    animation: fadeIn 0.3s ease;
+}
+
+.panel-footer {
+    border-top: 1px dashed #333;
+    padding-top: 15px;
+    margin-top: 20px;
+    font-size: 11px;
+    color: #555;
+    line-height: 16px;
+}
+
+/* Animasi sederhana saat data berganti */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
