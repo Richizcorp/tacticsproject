@@ -4,7 +4,6 @@
 * {
     margin: 0;
     padding: 0;
-    box-shadow: border-box;
     box-sizing: border-box;
 }
 
@@ -17,7 +16,7 @@ body {
 }
 
 .tactics-wrapper {
-    max-width: 1100px;
+    max-width: 1250px;
     margin: 0 auto;
 }
 
@@ -39,10 +38,71 @@ body {
     text-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
 }
 
+.header-controls {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    margin-top: 8px;
+}
+
 .strength-indicator {
     font-size: 14px;
     color: #aaa;
-    margin-top: 5px;
+}
+
+.formation-selector {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.select-box label {
+    font-size: 11px;
+    color: #888;
+    letter-spacing: 1px;
+}
+
+.formation-selector select {
+    background: #111;
+    color: #fff;
+    border: 1px solid #D4AF37;
+    padding: 5px 10px;
+    font-family: 'Oxanium', sans-serif;
+    font-size: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.tactic-btn {
+    background: #222;
+    color: #fff;
+    border: 1px solid #444;
+    padding: 5px 12px;
+    font-family: 'Oxanium', sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+}
+
+.tactic-btn.gold-btn {
+    background: linear-gradient(135deg, #D4AF37 0%, #AA7C11 100%);
+    color: #000;
+    border: none;
+    box-shadow: 0 0 10px rgba(212,175,55,0.3);
+}
+
+.tactic-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+.tactic-btn.gold-btn:hover {
+    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.5);
 }
 
 .btn-back {
@@ -64,24 +124,17 @@ body {
 }
 
 /* ==========================================
-   LAYOUT GRID (LAPANGAN KIRI, PANEL KANAN)
+   THE CORE MASTER LOCK: GRID STRUKTUR ANTI-JATUH
    ========================================== */
 .tactics-layout {
     display: grid;
-    grid-template-columns: 1.3fr 1fr;
-    gap: 30px;
+    grid-template-columns: 1.35fr 1fr; /* Membagi kolom Kiri (Lapangan) & Kanan (Profil) */
+    gap: 25px;
 }
 
-@media (max-width: 850px) {
-    .tactics-layout {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* ==========================================
-   ENGINE VISUAL LAPANGAN SEPAK BOLA
-   ========================================== */
+/* Kunci Semua Elemen Lapangan & Laci di Kolom Kiri (1) */
 .football-pitch {
+    grid-column: 1;
     width: 100%;
     height: 520px;
     background: linear-gradient(135deg, #143d1a 0%, #071f0b 100%);
@@ -92,21 +145,40 @@ body {
     box-shadow: inset 0 0 100px rgba(0,0,0,0.8), 0 10px 30px rgba(0,0,0,0.5);
 }
 
-/* Garis-Garis Lapangan */
-.pitch-lines {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    pointer-events: none; /* Agar tidak mengganggu drag mouse */
+.bench-section {
+    grid-column: 1;
+    margin-top: 15px;
 }
 
+/* Kunci Panel Informasi di Kolom Kanan (2) Sejajar Sempurna */
+.detail-panel {
+    grid-column: 2;
+    grid-row: 1 / span 2; /* Menyejajarkan panjangnya ke bawah sampai laci cadangan */
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid #222;
+    border-radius: 15px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 620px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* ==========================================
+   VISUAL GARIS LAPANGAN SEPAK BOLA
+   ========================================== */
+.pitch-lines {
+    position: absolute;
+    width: 100%; height: 100%;
+    pointer-events: none;
+}
 .center-line {
     position: absolute;
     top: 50%; left: 0;
     width: 100%; height: 2px;
     background: rgba(255, 255, 255, 0.15);
 }
-
 .center-circle {
     position: absolute;
     top: 50%; left: 50%;
@@ -115,7 +187,6 @@ body {
     border-radius: 50%;
     transform: translate(-50%, -50%);
 }
-
 .penalty-area {
     position: absolute;
     left: 50%;
@@ -127,13 +198,7 @@ body {
 .penalty-area.bottom { bottom: -2px; border-bottom: none; }
 
 /* ==========================================
-   BULATAN PEMAIN INTERAKTIF (MARKER)
-   ========================================== */
-/* ==========================================
-   PERBARUI STYLE MARKER PEMAIN (DENGAN FOTO)
-   ========================================== */
-/* ==========================================
-   PERBARUI STYLE MARKER PEMAIN (ANTI-GAGAL)
+   MARKER BULATAN PEMAIN DI LAPANGAN
    ========================================== */
 .player-marker {
     position: absolute;
@@ -151,32 +216,27 @@ body {
     user-select: none;
     box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     transform: translate(-50%, -50%);
-    transition: border-color 0.2s, box-shadow 0.2s;
 }
-
-/* Gambar Pemain Terpotong Rapi */
-/* Gambar Pemain Terpotong Rapi */
+.player-marker:active {
+    cursor: grabbing;
+}
 .player-photo {
     width: 100%;
     height: 100%;
-    object-fit: cover;      /* Tetap pertahankan ini */
-    object-position: top;   /* TAMBAHKAN INI: Memaksa fokus kamera ke kepala pemain */
+    object-fit: cover;
+    object-position: top; /* Fokus ke area wajah/rambut pemain */
     border-radius: 50%;
     position: absolute;
     top: 0; left: 0;
     z-index: 1;
 }
-
-/* Teks Inisial Cadangan jika Gambar Kosong/Gagal Load */
 .player-initial {
     font-size: 14px;
     font-weight: 800;
     color: #8B0000;
     font-family: 'Comfortaa', cursive;
-    z-index: 0; /* Berada di belakang gambar */
+    z-index: 0;
 }
-
-/* Badge Kotak di Bawah Lingkaran */
 .player-badge-info {
     position: absolute;
     bottom: -8px;
@@ -192,71 +252,91 @@ body {
     min-width: 50px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.4);
 }
+.rating-label { font-size: 11px; font-weight: 800; color: #fff; }
+.pos-label { font-size: 8px; color: #D4AF37; font-weight: bold; }
 
-.player-marker .rating-label {
-    font-size: 11px;
-    font-weight: 800;
-    color: #ffffff;
-}
-
-.player-marker .pos-label {
-    font-size: 8px;
+/* ==========================================
+   STYLE PANEL CADANGAN (BENCH SECTION)
+   ========================================== */
+.bench-toggle-btn {
+    background: #111;
     color: #D4AF37;
+    border: 1px solid #333;
+    padding: 8px 16px;
+    font-family: 'Oxanium', sans-serif;
+    font-size: 12px;
     font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+}
+.bench-toggle-btn:hover {
+    background: rgba(212,175,55,0.05);
+}
+.bench-drawer {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid #222;
+    border-radius: 12px;
+    padding: 15px;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+.bench-card {
+    width: 75px;
+    height: 95px;
+    background: #0d0d0d;
+    border: 1px solid #444;
+    border-radius: 8px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 5px;
+    cursor: grab;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    user-select: none;
+    transition: transform 0.2s, border-color 0.2s;
+}
+.bench-card:hover {
+    border-color: #eab308;
+    transform: translateY(-3px);
+}
+.bench-photo {
+    width: 100%; height: 70%;
+    object-fit: cover;
+    object-position: top;
+    position: absolute;
+    top: 0; left: 0;
+    border-radius: 8px 8px 0 0;
+    background-color: #151515;
+}
+.bench-name {
+    font-size: 8px; color: #fff;
+    font-weight: bold; text-align: center;
+    width: 90%; z-index: 2; margin-bottom: 2px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.bench-badge-info {
+    background: #111; border: 1px solid #D4AF37;
+    border-radius: 3px; padding: 0px 4px;
+    display: flex; gap: 3px; font-size: 7px; font-weight: bold; z-index: 2;
 }
 
 /* ==========================================
-   SIDE PANEL INFO PEMAIN (KANAN)
+   PANEL PROFIL KANAN & RESPONSIVE DESIGN
    ========================================== */
-.detail-panel {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid #222;
-    border-radius: 15px;
-    padding: 25px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 520px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
+.panel-header { border-bottom: 1px dashed #333; padding-bottom: 10px; margin-bottom: 20px; }
+.detail-content { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+.placeholder-text { color: #666; font-size: 13px; line-height: 20px; }
+.panel-footer { border-top: 1px dashed #333; padding-top: 15px; margin-top: 20px; font-size: 11px; color: #555; }
 
-.panel-header {
-    border-bottom: 1px dashed #333;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-}
-
-.detail-content {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.placeholder-text {
-    color: #666;
-    font-size: 13px;
-    line-height: 20px;
-}
-
-.player-active-info {
-    width: 100%;
-    animation: fadeIn 0.3s ease;
-}
-
-.panel-footer {
-    border-top: 1px dashed #333;
-    padding-top: 15px;
-    margin-top: 20px;
-    font-size: 11px;
-    color: #555;
-    line-height: 16px;
-}
-
-/* Animasi sederhana saat data berganti */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
+@media (max-width: 950px) {
+    .tactics-layout { grid-template-columns: 1fr; }
+    .football-pitch, .bench-section, .detail-panel { grid-column: 1 / -1; }
+    .detail-panel { height: auto; min-height: 450px; }
 }

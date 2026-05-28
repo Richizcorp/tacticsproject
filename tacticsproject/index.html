@@ -3,28 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tactics Board</title>
+    <title>Milanese Elite Tactics Board</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts untuk tampilan sporty ala game -->
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Oxanium:wght@600;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <div class="tactics-wrapper">
-        <!-- HEADER PANEL -->
         <header class="tactics-header">
             <div class="team-meta">
                 <h1 class="gold-text">MILANESE ELITE TACTICS</h1>
-                <p class="strength-indicator">TEAM STRENGTH: <span id="team-strength" class="gold-text">---</span></p>
+                <div class="header-controls">
+                    <p class="strength-indicator">TEAM STRENGTH: <span id="team-strength" class="gold-text">---</span></p>
+                    
+                    <div class="formation-selector">
+                        <div class="select-box">
+                            <label for="select-formasi">STRATEGY: </label>
+                            <select id="select-formasi">
+                                <option value="433">4 - 3 - 3 (Default)</option>
+                                <option value="4231">4 - 2 - 3 - 1</option>
+                                <option value="352">3 - 5 - 2</option>
+                            </select>
+                        </div>
+
+                        <button id="btn-toggle-mode" class="tactic-btn">
+                            <span>✥</span> MODE: TUKAR PEMAIN
+                        </button>
+
+                        <button id="btn-auto-pick" class="tactic-btn gold-btn">
+                            ⚡ AUTO-SET BEST SQUAD
+                        </button>
+                    </div>
+                </div>
             </div>
-            <!-- Tombol Kembali ke Hub Portofolio Utama -->
-            <a href="../WEBSITE/portofolio.html" class="btn-back">← KEMBALI KE PORTOFOLIO</a>
+            <a href="../web-portofolio/index.html" class="btn-back">← KEMBALI KE PORTOFOLIO</a>
         </header>
 
-        <!-- MAIN LAYOUT -->
         <div class="tactics-layout">
             
-            <!-- SISI KIRI: LAPANGAN SEPAK BOLA DIGITAL -->
             <main id="pitch" class="football-pitch">
                 <div class="pitch-lines">
                     <div class="center-circle"></div>
@@ -32,27 +48,32 @@
                     <div class="penalty-area top"></div>
                     <div class="penalty-area bottom"></div>
                 </div>
-                <!-- Wadah tempat 11 pemain akan di-spawn oleh JS -->
                 <div id="players-on-pitch"></div>
             </main>
 
-            <!-- SISI KANAN: LIVE PANEL INFO PEMAIN -->
+            <div class="bench-section">
+                <button id="btn-toggle-bench" class="bench-toggle-btn">
+                    🏃‍♂️ SHOW SUBSTITUTES BENCH (5)
+                </button>
+                
+                <div id="bench-container" class="bench-drawer" style="display: none;"></div>
+            </div>
+
             <aside class="detail-panel">
                 <div class="panel-header">
                     <h4 class="gold-text">// PLAYER LIVE PROFILE</h4>
                 </div>
                 <div id="detail-content" class="detail-content">
-                    <p class="placeholder-text">Klik dan seret bulatan pemain di atas lapangan untuk menganalisis perubahan rating posisi secara real-time.</p>
+                    <p class="placeholder-text">Klik, seret, atau tukar posisi pemain di atas lapangan untuk menganalisis perubahan rating adaptasi atribut FIFA secara real-time.</p>
                 </div>
                 <div class="panel-footer">
-                    <p>Sistem membaca koordinat piksel $X$ dan $Y$ secara spasial untuk menghitung kecocokan taktik pemain otomatis.</p>
+                    <p>Sistem membaca koordinat piksel spasial X dan Y untuk mendeteksi wilayah taktik taktis otomatis.</p>
                 </div>
             </aside>
 
         </div>
     </div>
 
-    <!-- HUBUNGKAN KE JAVASCRIPT ENGINE DRAG & DROP -->
     <script src="script.js"></script>
 </body>
 </html>
